@@ -1,4 +1,6 @@
-import { useId } from "react";
+import { useId, useState } from "react";
+import useCurrencyName from '../customHooks/useCurrencyName';
+
 
 function InputPanel({
   theme, 
@@ -10,12 +12,15 @@ function InputPanel({
   onCurrencyChange,
   selectedCurrency="usd",
   currCodes= [],
-  currNames=[],
 }){
-
 
   const amountID = useId() 
   const currencyId = useId() 
+  
+  const [currCode, setCurrCode] = useState([])
+  const currencyNames = useCurrencyName(currCode)
+  const currName = currencyNames[0][currCode]
+
   return (
     <div className={theme}>
       <div className="">
@@ -34,15 +39,16 @@ function InputPanel({
       <div>
         <label className='' 
                htmlFor={currencyId}>
-          Currency Name
+          {currName === ""? "Currency Type": currName}
         </label>
 
         <select name="currency" 
                 id={currencyId}
                 value={selectedCurrency}
                 onChange={(e)=>{
-                  let currCode = e.target.value;
-                  onCurrencyChange(currCode)
+                  let code = e.target.value;
+                  onCurrencyChange(code)
+                  setCurrCode(code)
                 }}
                 desabled={currencyDesable}>
                 

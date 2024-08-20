@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function useCurrencyName(currency) {
+function useCurrencyName(currCode) {
   const [currNames, setCurrNames] = useState({});
 
   useEffect(() => {
@@ -8,11 +8,12 @@ function useCurrencyName(currency) {
       'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json'
     )
       .then((res) => res.json())
-      .then((currNames) => setCurrNames(currNames));
-  }, [currency]);
+      .then((data) => {
+        setCurrNames(data);
+      });
+  }, [currCode]);
 
-  console.log(currNames);
-  return currNames;
+  return [currNames];
 }
 
 export default useCurrencyName;

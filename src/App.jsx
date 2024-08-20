@@ -8,6 +8,7 @@ function App() {
   const [convertTo, setConvertTo] = useState("usd");
   const [convertedAmount, setConvertedAmount] = useState(0);
 
+  //Currency Value Options 
   const currValue = useCurrencyValue(convertFrom)
   const options = Object.keys(currValue[0]);
 
