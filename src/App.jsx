@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import InputPanel from './components/InputPanel'
 import useCurrencyValue from './customHooks/useCurrencyValue'
 import useCurrencyName from './customHooks/useCurrencyName';
+import { MdSwapVerticalCircle } from "react-icons/md";
+
 
 function App() {
   const [amount, setAmount] = useState();
@@ -28,34 +30,36 @@ function App() {
   
   useEffect(()=>{
     setConvertedAmount(amount*(currValue[0])[convertTo])
-    console.log("Amount Modified")
   },[amount, convertFrom, convertTo])
 
   return (
-    <div>
-      <h1 className="">Currency Convertor</h1>
+    <div className='h-screen flex items-center justify-center flex-col bg-gray-900'>
+      <h1 className="text-2xl font-mono font-bold text-gray-200 my-3  ">Currency Convertor</h1>
+      <div className='flex flex-col gap-1'>
+        <InputPanel theme = "bg-gray-200 p-8 font-mono text-lg w-full rounded"
+                      label="From"
+                      amount={amount}
+                      currCodes={options}
+                      onAmoutnChange={amount=>setAmount(amount)}
+                      onCurrencyChange={curr=>setConvertFrom(curr)} 
+                      selectedCurrency={convertFrom}
+                      currName={currencyFrom}/>
 
-      <InputPanel theme = ""
-                  label="From"
-                  amount={amount}
-                  currCodes={options}
-                  onAmoutnChange={amount=>setAmount(amount)}
-                  onCurrencyChange={curr=>setConvertFrom(curr)} 
-                  selectedCurrency={convertFrom}
-                  currName={currencyFrom}/>
+          <InputPanel theme = "bg-red-400 p-8 font-mono text-lg w-full rounded"
+                      label="To"
+                      amount={convertedAmount?? 0}
+                      currCodes={options}
+                      amountDesable={true}
+                      onCurrencyChange={curr=>setConvertTo(curr)} 
+                      selectedCurrency={convertTo}
+                      currName={currencyTo}/>
 
-      <button className=''
-              onClick={swap}>
-              Swap</button>
+          <button className='text-gray-600 bg-white text-4xl m-auto relative bottom-2/4 rounded-full hover:text-blue-600'
+                  onClick={swap}>
+                    <MdSwapVerticalCircle />
 
-      <InputPanel theme = ""
-                  label="To"
-                  amount={convertedAmount?? 0}
-                  currCodes={options}
-                  amountDesable={true}
-                  onCurrencyChange={curr=>setConvertTo(curr)} 
-                  selectedCurrency={convertTo}
-                  currName={currencyTo}/>
+          </button>
+      </div>
     </div>
   )
 }
