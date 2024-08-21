@@ -1,5 +1,5 @@
 import { useId, useState } from "react";
-import useCurrencyName from '../customHooks/useCurrencyName';
+// import useCurrencyName from '../customHooks/useCurrencyName';
 
 
 function InputPanel({
@@ -12,14 +12,11 @@ function InputPanel({
   onCurrencyChange,
   selectedCurrency="usd",
   currCodes= [],
+  currName,
 }){
 
   const amountID = useId() 
   const currencyId = useId() 
-  
-  const [currCode, setCurrCode] = useState([])
-  const currencyNames = useCurrencyName(currCode)
-  const currName = currencyNames[0][currCode]
 
   return (
     <div className={theme}>
@@ -48,7 +45,6 @@ function InputPanel({
                 onChange={(e)=>{
                   let code = e.target.value;
                   onCurrencyChange(code)
-                  setCurrCode(code)
                 }}
                 desabled={currencyDesable}>
                 
